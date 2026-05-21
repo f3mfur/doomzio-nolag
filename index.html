@@ -471,18 +471,14 @@
     refreshDiscordWidget();
     setInterval(refreshDiscordWidget, 30000);
 
-    // Initialize Unity with the modern createUnityInstance API
-    createUnityInstance(document.querySelector("#unityContainer"), {
-      dataUrl: "doomz.data.unityweb",
-      frameworkUrl: "doomz.wasm.framework.unityweb",
-      codeUrl: "doomz.wasm.code.unityweb",
-      streamingAssetsUrl: "StreamingAssets",
-      companyName: "DefaultCompany",
-      productName: "doomz.io",
-      productVersion: "0.1",
-    }).catch((message) => {
-      console.error("Unity initialization failed:", message);
-    });
+    // Wait for UnityLoader to be available (loaded from doomz.js), then instantiate
+    setTimeout(() => {
+      if (typeof UnityLoader !== 'undefined') {
+        UnityLoader.instantiate("unityContainer", "doomz.json", {});
+      } else {
+        console.error("UnityLoader not found - doomz.js may not have loaded correctly");
+      }
+    }, 100);
   </script>
 </body>
 </html>
