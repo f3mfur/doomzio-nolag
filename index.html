@@ -472,13 +472,15 @@
     setInterval(refreshDiscordWidget, 30000);
 
     // Wait for UnityLoader to be available (loaded from doomz.js), then instantiate
+    // Increased delay to 1 second to ensure doomz.js is fully parsed
     setTimeout(() => {
       if (typeof UnityLoader !== 'undefined') {
+        console.log("UnityLoader found, instantiating game...");
         UnityLoader.instantiate("unityContainer", "doomz.json", {});
       } else {
         console.error("UnityLoader not found - doomz.js may not have loaded correctly");
       }
-    }, 100);
+    }, 1000);
   </script>
 </body>
 </html>
