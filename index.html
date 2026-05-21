@@ -471,7 +471,18 @@
     refreshDiscordWidget();
     setInterval(refreshDiscordWidget, 30000);
 
-    UnityLoader.instantiate("unityContainer", "doomz.json", {});
+    // Initialize Unity with the modern createUnityInstance API
+    createUnityInstance(document.querySelector("#unityContainer"), {
+      dataUrl: "doomz.data.unityweb",
+      frameworkUrl: "doomz.wasm.framework.unityweb",
+      codeUrl: "doomz.wasm.code.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "DefaultCompany",
+      productName: "doomz.io",
+      productVersion: "0.1",
+    }).catch((message) => {
+      console.error("Unity initialization failed:", message);
+    });
   </script>
 </body>
 </html>
